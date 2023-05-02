@@ -8,6 +8,7 @@
 
 #include <stdlib.h>
 #include <stddef.h>
+#include <malloc.h>
 
 #include "libimagequant.h"
 #include "pam.h"
@@ -325,7 +326,7 @@ static void box_init(struct box *box, const hist_item *achv, const unsigned int 
 LIQ_PRIVATE colormap *mediancut(histogram *hist, unsigned int newcolors, const double target_mse, const double max_mse, void* (*malloc)(size_t), void (*free)(void*))
 {
     hist_item *achv = hist->achv;
-    struct box bv[newcolors+16];
+    struct box *bv = (struct box *)alloca(sizeof(struct box) * (newcolors + 16));
 
     assert(hist->boxes[0].begin == 0);
     assert(hist->boxes[LIQ_MAXCLUSTER-1].end == hist->size);

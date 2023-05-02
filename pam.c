@@ -204,7 +204,8 @@ LIQ_PRIVATE histogram *pam_acolorhashtoacolorhist(const struct acolorhash_table 
     if (!hist->achv) return NULL;
 
     /// Clusters form initial boxes for quantization, to ensure extreme colors are better represented
-    int counts[LIQ_MAXCLUSTER] = {};
+    int counts[LIQ_MAXCLUSTER];
+    memset(counts, 0, sizeof(counts));
     struct temp_hist_item *temp = malloc(MAX(1, acht->colors) * sizeof(temp[0]));
 
     /* Limit perceptual weight to 1/10th of the image surface area to prevent
